@@ -1,6 +1,8 @@
-from bs4 import BeautifulSoup
-from .base import BaseCrawler
 import hashlib
+
+from bs4 import BeautifulSoup
+
+from .base import BaseCrawler
 
 
 class StadtbauCrawler(BaseCrawler):

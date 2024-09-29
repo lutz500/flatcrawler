@@ -1,8 +1,10 @@
-from src.crawler.stadtbau_crawler import StadtbauCrawler
-from src.utils.telegram_connector import TelegramConnector
-from src.utils.storeage import Storage
 import os
+
 from dotenv import load_dotenv
+
+from src.crawler.stadtbau_crawler import StadtbauCrawler
+from src.utils.storeage import Storage
+from src.utils.telegram_connector import TelegramConnector
 
 if __name__ == "__main__":
     # Load env variables
