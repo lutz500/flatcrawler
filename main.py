@@ -5,16 +5,21 @@ import os
 from dotenv import load_dotenv
 
 if __name__ == "__main__":
+    # Load env variables
     load_dotenv()
     url_stadtbau = os.getenv("URL_STADTBAU")
 
+    # Initalize Crawler of type StadtbauCrawler
     crawler = StadtbauCrawler(url=url_stadtbau)
     crawler.crawl()
 
+    # Initalize Storage Instance and save new results
     storage = Storage("storage.json")
     update_objs = storage.save_objs(crawler.data)
 
+    # Create new Telegram Messages
     messages = crawler.create_messages(filter_ids=update_objs)
 
+    # Initialize TelegramConnector to send messages
     telegram = TelegramConnector()
     telegram.send_messages(messages, filter_ids=update_objs)

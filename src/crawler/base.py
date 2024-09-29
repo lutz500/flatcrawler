@@ -36,6 +36,3 @@ class BaseCrawler:
         web.quit()
 
         return html_content
-
-    def print_data(self):
-        print(self.data)

@@ -8,7 +8,13 @@ class StadtbauCrawler(BaseCrawler):
         self.url = url
         self.data = {}
 
-    def _hash_id(self, *argv):
+    def _hash_id(self, *argv) -> str:
+        """Calculate a consistent hash as id based on
+        different arguments
+
+        Returns:
+            str: Created hash as id
+        """
         obj_key = "_".join(str(arg) for arg in argv)
         hashed_id = hashlib.sha256(obj_key.encode()).hexdigest()
         return hashed_id
@@ -17,7 +23,10 @@ class StadtbauCrawler(BaseCrawler):
         # Use Selenium to be able to gather dynamic data
         data = self.get_dynamic_web_page(self.url)
 
+        # Convert data
         soup = BeautifulSoup(data, "html.parser")
+
+        # Scrape data specific for this website
         results = soup.find_all(
             "div",
             class_="col-12 col-md-6 col-lg-4 col-xl-3 property-card-list__card ng-star-inserted",
@@ -70,6 +79,7 @@ class StadtbauCrawler(BaseCrawler):
                 class_="image image--object-fit-default image--border-radius-none image--border-style-none",
             )["src"]
 
+            # Claculate unique id as hash
             id = self._hash_id(title, adress, area, rooms, badges)
 
             self.data[id] = {
@@ -88,7 +98,16 @@ class StadtbauCrawler(BaseCrawler):
 
         return self.data
 
-    def create_messages(self, filter_ids):
+    def create_messages(self, filter_ids: list[str]) -> dict:
+        """Create telegram message for this website/data
+
+        Args:
+            filter_ids (list[str]): List of ids messages should
+            be created for.
+
+        Returns:
+            dict: Dict of messages
+        """
         messages = []
 
         for key, obj in self.data.items():

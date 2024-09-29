@@ -9,44 +9,71 @@ class Storage:
         self.filepath = filepath
 
     def _check_storage(self):
+        """Check if storage file exists. If not create one."""
         if not os.path.isfile(self.filepath):
             with open(self.filepath, "w") as file:
                 file.write(json.dumps({}))
 
-    def _read_storage(self):
+    def _read_storage(self) -> dict:
+        """Read storage file.
+
+        Returns:
+            dict: Dictionary containing the storage data
+        """
         with open(self.filepath, "r") as file:
             return json.load(file)
 
     def _write_stores(self, data: dict):
+        """Write data to storage file.
+
+        Args:
+            data (dict): Data to write to storage file
+        """
         with open(self.filepath, "w") as file:
             file.write(json.dumps(data))
 
-    def save_objs(self, objs: dict):
+    def save_objs(self, objs: dict) -> list:
+        """Save object to storage file.
+
+        Args:
+            objs (dict): List of scraped objects
+
+        Returns:
+            list: List of ids for updated objects
+        """
+
+        # Check if storage file exits
         self._check_storage()
 
+        # Init variables
         update_objs = []
         deleted_obj = 0
 
+        # Read storage
         stored_data = self._read_storage()
 
+        # Define which ids(objs) to check
         existing_id = [id for id in stored_data.keys()]
         new_ids = [id for id in objs.keys()]
-
         obj_id_check = list(set(existing_id + new_ids))
 
+        # For each object to check, find out how to handle
+        # this object...
         for id in obj_id_check:
-            print(id)
-
+            # ... delete obj
             if id in existing_id and id not in new_ids:
                 stored_data.pop(id, None)
                 deleted_obj += 1
 
+            # ... add obj
             if id not in existing_id and id in new_ids:
                 stored_data[id] = objs[id]
                 update_objs.append(id)
 
+        # Write data to storage file
         self._write_stores(data=stored_data)
 
+        # Log changes to command line
         print(f"New objects found: {len(update_objs)}")
         print(f"Deleted objects: {deleted_obj}")
         print(f"Still open objects: {len(stored_data)-len(update_objs)}")

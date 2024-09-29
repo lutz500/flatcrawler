@@ -15,13 +15,14 @@ class TelegramConnector:
         )
         self.url_photo = f"https://api.telegram.org/{self.bot}:{self.token}/sendPhoto"
 
-    def send_message(self, text: str):
-        url = f"https://api.telegram.org/{self.bot}:{self.token}/sendMessage"
-        data = {"chat_id": self.chat_id, "text": text, "parse_mode": "html"}
+    def send_messages(self, messages: list[dict], filter_ids: list = None):
+        """Send telegram messages
 
-        requests.post(url, data=data)
-
-    def send_messages(self, messages: list, filter_ids: list = None):
+        Args:
+            messages (list[dict]): List of dicts for messages to send
+            filter_ids (list, optional): List of filter id for which to send messages.
+            Defaults to None.
+        """
         for obj in messages:
             msg = obj.get("msg", None)
             img_link = obj.get("img_link", None)
