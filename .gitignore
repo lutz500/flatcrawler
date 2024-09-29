@@ -1,0 +1,4 @@
+storage.json
+.env
+**_pycache__**
+.ruff_cache
