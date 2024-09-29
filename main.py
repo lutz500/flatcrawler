@@ -11,6 +11,8 @@ if __name__ == "__main__":
 
     # Initalize Crawler of type StadtbauCrawler
     crawler = StadtbauCrawler(url=url_stadtbau)
+
+    # Crawl data
     crawler.crawl()
 
     # Initalize Storage Instance and save new results
