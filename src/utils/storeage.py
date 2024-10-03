@@ -49,6 +49,7 @@ class Storage:
         update_objs = []
         deleted_obj = 0
         marked_deleted = 0
+        unmarked_deleted = 0
 
         # Read storage
         stored_data = self._read_storage()
@@ -58,14 +59,8 @@ class Storage:
         new_ids = [id for id in objs.keys()]
         obj_id_check = list(set(existing_id + new_ids))
 
-        # new_ids = new_ids[:1]
-
         # For each object to check, find out how to handle
         # this object...
-        print(obj_id_check)
-        print(existing_id)
-        print(new_ids)
-
         for id in obj_id_check:
             # ... delete obj
             if id in existing_id and id not in new_ids:
@@ -92,12 +87,15 @@ class Storage:
                 # if obj was marked as deleted unmark it
                 if stored_data[id]["marked_deleted"]:
                     stored_data[id]["marked_deleted"] = False
+                    unmarked_deleted += 1
 
         # Write data to storage file
         self._write_stores(data=stored_data)
 
         # Log changes to command line
         print(f"New objects found: {len(update_objs)}")
+        print(f"Marked as deleted: {marked_deleted}")
+        print(f"Unmarked as deleted: {unmarked_deleted}")
         print(f"Deleted objects: {deleted_obj}")
         print(f"Still open objects: {len(stored_data)-len(update_objs)}")
 
