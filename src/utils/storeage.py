@@ -48,6 +48,7 @@ class Storage:
         # Init variables
         update_objs = []
         deleted_obj = 0
+        marked_deleted = 0
 
         # Read storage
         stored_data = self._read_storage()
@@ -57,18 +58,40 @@ class Storage:
         new_ids = [id for id in objs.keys()]
         obj_id_check = list(set(existing_id + new_ids))
 
+        # new_ids = new_ids[:1]
+
         # For each object to check, find out how to handle
         # this object...
+        print(obj_id_check)
+        print(existing_id)
+        print(new_ids)
+
         for id in obj_id_check:
             # ... delete obj
             if id in existing_id and id not in new_ids:
+                obj = stored_data.get(id)
+
+                # check if obj is not found the first time
+                if not obj.get("marked_deleted", False):
+                    # if yes mark as deleted
+                    stored_data[id]["marked_deleted"] = True
+                    marked_deleted += 1
+
+                    continue
+
                 stored_data.pop(id, None)
                 deleted_obj += 1
 
             # ... add obj
             if id not in existing_id and id in new_ids:
+                objs[id]["marked_deleted"] = False
                 stored_data[id] = objs[id]
                 update_objs.append(id)
+
+            if id in existing_id and id in new_ids:
+                # if obj was marked as deleted unmark it
+                if stored_data[id]["marked_deleted"]:
+                    stored_data[id]["marked_deleted"] = False
 
         # Write data to storage file
         self._write_stores(data=stored_data)
