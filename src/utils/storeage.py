@@ -83,6 +83,7 @@ class Storage:
                 stored_data[id] = objs[id]
                 update_objs.append(id)
 
+            # ... update obj
             if id in existing_id and id in new_ids:
                 # if obj was marked as deleted unmark it
                 if stored_data[id]["marked_deleted"]:
