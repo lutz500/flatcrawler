@@ -101,3 +101,28 @@ class Storage:
         print(f"Still open objects: {len(stored_data)-len(update_objs)}")
 
         return update_objs
+
+    def get_values(self, key, filter_deleted=True):
+        """
+        Extracts all values associated with the specified key from the data storage.
+
+        :param key: The key to extract values for
+        :param filter_deleted: Whether to exclude deleted entries (default: True)
+        :return: List of all values associated with the specified key
+        """
+        data = self._read_storage()  # Fetch the data
+        values = [
+            item[key]
+            for item in data.values()
+            if key in item and (not filter_deleted or not item.get("deleted", False))
+        ]
+        return values
+
+    def get_all(self):
+        """
+        Extracts all entries from the data storage.
+
+        :param filter_deleted: Whether to exclude deleted entries (default: True)
+        :return: List of all entries
+        """
+        return self._read_storage()

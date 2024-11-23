@@ -3,3 +3,5 @@ storage.json
 **_pycache__**
 .ruff_cache
 **venv**
+map.html
+map.png

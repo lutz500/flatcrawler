@@ -39,3 +39,14 @@ class TelegramConnector:
                     "parse_mode": "html",
                 }
                 requests.post(self.url_message, data=data_message)
+
+    def send_map(self, map_path: str):
+        """Send map to telegram
+
+        Args:
+            map_path (str): Path to map file
+        """
+        with open(map_path, "rb") as file:
+            data_message = {"chat_id": self.chat_id}
+            files = {"photo": file}
+            requests.post(self.url_photo, data=data_message, files=files)

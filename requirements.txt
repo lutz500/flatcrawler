@@ -13,6 +13,8 @@ attrs==24.2.0
     #   trio
 beautifulsoup4==4.12.3
     # via -r requirements.in
+branca==0.8.0
+    # via folium
 certifi==2024.8.30
     # via
     #   requests
@@ -21,12 +23,26 @@ cffi==1.17.1
     # via trio
 charset-normalizer==3.3.2
     # via requests
+folium==0.18.0
+    # via -r requirements.in
+geographiclib==2.0
+    # via geopy
+geopy==2.4.1
+    # via -r requirements.in
 h11==0.14.0
     # via wsproto
 idna==3.10
     # via
     #   requests
     #   trio
+jinja2==3.1.4
+    # via
+    #   branca
+    #   folium
+markupsafe==3.0.2
+    # via jinja2
+numpy==2.1.3
+    # via folium
 outcome==1.3.0.post0
     # via trio
 packaging==24.1
@@ -40,7 +56,9 @@ pysocks==1.7.1
 python-dotenv==1.0.1
     # via webdriver-manager
 requests==2.32.3
-    # via webdriver-manager
+    # via
+    #   folium
+    #   webdriver-manager
 ruff==0.6.8
     # via -r requirements.in
 selenium==4.25.0
@@ -69,3 +87,5 @@ websocket-client==1.8.0
     # via selenium
 wsproto==1.2.0
     # via trio-websocket
+xyzservices==2024.9.0
+    # via folium
