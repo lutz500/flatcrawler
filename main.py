@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from src.crawler.stadtbau_crawler import StadtbauCrawler
 from src.utils.storeage import Storage
 from src.utils.telegram_connector import TelegramConnector
+from src.utils.map import create_map
 
 if __name__ == "__main__":
     # Load env variables
@@ -29,6 +30,6 @@ if __name__ == "__main__":
     telegram.send_messages(messages, filter_ids=update_objs)
 
     # Create map if new objects are found
-    # if len(update_objs) > 0:
-    #     create_map(storage.get_all())
-    #     telegram.send_map("map.png")
+    if len(update_objs) > 0:
+        create_map(storage.get_all())
+        telegram.send_map("map.png")
