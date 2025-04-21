@@ -44,11 +44,15 @@ class StadtbauCrawler(BaseCrawler):
             ).text
             area = element.find(
                 "div", class_="d-flex align-items-center me-3 property-card__stats-item"
-            ).text
+            )
+            area = area.text if area else "N/A"
+
             rooms = element.find(
                 "div",
                 class_="d-flex align-items-center me-3 property-card__stats-item ng-star-inserted",
-            ).text
+            )
+            rooms = int(rooms.text) if rooms else "N/A"
+
             rent = element.find(
                 "div", class_="my-0 ms-auto property-card__stats-item"
             ).text
@@ -88,7 +92,7 @@ class StadtbauCrawler(BaseCrawler):
                 "title": title,
                 "adress": adress,
                 "area": area,
-                "rooms": int(rooms),
+                "rooms": rooms,
                 "rent": rent,
                 "obj_id": obj_id,
                 "starting_date": starting_date,

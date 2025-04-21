@@ -98,7 +98,7 @@ class Storage:
         print(f"Marked as deleted: {marked_deleted}")
         print(f"Unmarked as deleted: {unmarked_deleted}")
         print(f"Deleted objects: {deleted_obj}")
-        print(f"Still open objects: {len(stored_data)-len(update_objs)}")
+        print(f"Still open objects: {len(stored_data) - len(update_objs)}")
 
         return update_objs
 

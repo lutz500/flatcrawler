@@ -4,9 +4,6 @@
 #
 #    pip-compile --output-file=requirements.txt requirements.in
 #
---extra-index-url https://pypi.ngc.nvidia.com
---trusted-host pypi.ngc.nvidia.com
-
 attrs==24.2.0
     # via
     #   outcome
@@ -19,8 +16,6 @@ certifi==2024.8.30
     # via
     #   requests
     #   selenium
-cffi==1.17.1
-    # via trio
 charset-normalizer==3.3.2
     # via requests
 folium==0.18.0
@@ -49,8 +44,6 @@ packaging==24.1
     # via webdriver-manager
 pillow==10.4.0
     # via -r requirements.in
-pycparser==2.22
-    # via cffi
 pysocks==1.7.1
     # via urllib3
 python-dotenv==1.0.1
